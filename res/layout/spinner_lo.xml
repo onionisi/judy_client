@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="horizontal" 
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+
+	<TextView 
+		android:text="id" 
+		android:id="@+id/id_TextView01" 
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content" 
+		android:paddingRight="20px" />
+
+	<TextView 
+		android:text="price" 
+		android:id="@+id/price_TextView02" 
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content"
+		android:paddingRight="20px" />
+
+	<TextView 
+		android:text="name" 
+		android:id="@+id/name_TextView03" 
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content"/>
+
+</LinearLayout>
