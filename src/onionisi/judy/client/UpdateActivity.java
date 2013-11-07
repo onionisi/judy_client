@@ -88,7 +88,7 @@ public class UpdateActivity extends ListActivity {
 			//URL url = new URL(urlStr);
 			//URLConnection conn = url.openConnection();
 			//InputStream in = conn.getInputStream();
-			String request = "pdt";
+			String request = "upd";
 			String result = JudyZmq.Query(request);
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder = factory.newDocumentBuilder();
