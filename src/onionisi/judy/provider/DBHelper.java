@@ -15,13 +15,11 @@ public class DBHelper extends SQLiteOpenHelper {
 	}
 
 	public void onCreate(SQLiteDatabase db) {
-       /* 
 		db.execSQL("CREATE TABLE " + TABLES_TABLE_NAME + " ("
                 + Tables._ID + " INTEGER PRIMARY KEY,"
-                + Tables.NUM + " TEXT,"
+                + Tables.NUM + " INTEGER,"
                 + Tables.DESCRIPTION + " TEXT"
                 + ");");
-        */
 		db.execSQL("CREATE TABLE " + TABLES_TABLE_NAME2 + " ("
 				+ Menus._ID + " INTEGER PRIMARY KEY, "
 				+ Menus.TYPE_ID + " INTEGER,"
@@ -34,7 +32,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
 	// updating new version call this
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		//db.execSQL("DROP TABLE IF EXISTS TableTbl");
+		db.execSQL("DROP TABLE IF EXISTS TableTbl");
 		db.execSQL("DROP TABLE IF EXISTS MenuTbl");
 		onCreate(db);
 	}

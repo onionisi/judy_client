@@ -36,7 +36,7 @@ public class UpdateActivity extends ListActivity {
 		setTitle("数据同步");
 
 		ListView listView = getListView();
-		String[] items = {"update menutbl", "update tabletbl"};
+		String[] items = {"更新菜单", "更新桌号"};
 
 		ListAdapter adapter = new ArrayAdapter<String>(this, 
 				android.R.layout.simple_list_item_1, items);
@@ -82,17 +82,15 @@ public class UpdateActivity extends ListActivity {
 	}
 
 	private void updateMenu() {
-		//String urlStr = HttpUtil.BASE_URL + "servlet/UpdateServlet";
+		String request = "upd";
 		try {
 			// TODO: fixed up get data for value
-			//URL url = new URL(urlStr);
-			//URLConnection conn = url.openConnection();
-			//InputStream in = conn.getInputStream();
-			String request = "upd";
 			String result = JudyZmq.Query(request);
+
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder = factory.newDocumentBuilder();
 			Document doc = builder.parse(result);
+
 			NodeList nl = doc.getElementsByTagName("menu");
 
 			ContentResolver cr = getContentResolver();
@@ -126,12 +124,58 @@ public class UpdateActivity extends ListActivity {
 
 				cr.insert(uri1, values);
 			}
+
+			Toast.makeText(UpdateActivity.this, "更新菜单成功", Toast.LENGTH_SHORT).show();
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	private void updateTable() {
-
+		String request = "upd";
+		try {
+			// 实例化目标zmq的口令并取得连接的输入流
+			String result = JudyZmq.Query(request);
+			
+			// 准备读取xml文件所需的所有类实例
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+			DocumentBuilder builder = dbf.newDocumentBuilder();
+			Document doc = builder.parse(is);
+			// 获取所有table节点装入列表
+			NodeList nodeList = doc.getElementsByTagName("table");
+			
+			// 获得ContentResolver在更新前删除旧内容
+			ContentResolver resolver = this.getContentResolver();
+			Uri tableProviderURI = Tables.CONTENT_URI;
+			resolver.delete(tableProviderURI, null, null);
+		
+			// 从xml中提取数据并用ContentProvider插入sqlite表中
+			for (int i = 0; i < nodeList.getLength(); i++) {
+				Element e = (Element) nodeList.item(i);
+				ContentValues values = new ContentValues();
+				values.put("_id", e.getElementsByTagName("id").item(0).getFirstChild().getNodeValue());
+				values.put("num", e.getElementsByTagName("num").item(0).getFirstChild().getNodeValue());
+				values.put("description", e.getElementsByTagName("description").item(0).getFirstChild().getNodeValue());
+System.out.println("_id: " + e.getElementsByTagName("id").item(0).getFirstChild().getNodeValue());
+				resolver.insert(tableProviderURI, values);
+			}
+			Toast.makeText(UpdateActivity.this, "更新桌位成功", Toast.LENGTH_SHORT).show();
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ParserConfigurationException e) {
+			e.printStackTrace();
+		} catch (SAXException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (is != null) {
+					is.close();	
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }
