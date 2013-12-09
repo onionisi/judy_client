@@ -44,16 +44,16 @@ import onionisi.judy.tool.Message.UnionTable2;
 
 public class MainMenuActivity extends Activity
 {
-    /** Called when the activity is first created. */
-    @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
+	/** Called when the activity is first created. */
+	@Override
+	public void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
 		setTitle("Order_system-Main menu");
-        setContentView(R.layout.main_menu);
+		setContentView(R.layout.main_menu);
 		GridView gridview = (GridView) findViewById(R.id.gridview);
 		gridview.setAdapter(new ImageAdapter(this));
-    }
+	}
 
 	public class ImageAdapter extends BaseAdapter {
 		// contruct context
@@ -213,10 +213,10 @@ public class MainMenuActivity extends Activity
 					// and change table on server
 					// return result
 					/*
-					String queryString = "orderId="+orderId+"&tableId="+tableId;
-					String url = HttpUtil.BASE_URL+"servlet/ChangeTableSerlet?"+queryString;
-					String result = HttpUtil.queryStringForPost(url);
-					*/
+					   String queryString = "orderId="+orderId+"&tableId="+tableId;
+					   String url = HttpUtil.BASE_URL+"servlet/ChangeTableSerlet?"+queryString;
+					   String result = HttpUtil.queryStringForPost(url);
+					   */
 					ChangeTable.Builder change = ChangeTable.newBuilder();
 
 					change.setOrderId(Integer.valueOf(orderId));
@@ -267,12 +267,12 @@ public class MainMenuActivity extends Activity
 			NodeList nl = doc.getElementsByTagName("table");
 			// Spinner数据
 			List items = new ArrayList();
-			
+
 			// 获得XML数据
 			for (int i = 0; i < nl.getLength(); i++) {
 				// 桌位编号
 				String id = doc.getElementsByTagName("id")
-						.item(i).getFirstChild().getNodeValue();
+					.item(i).getFirstChild().getNodeValue();
 				// 桌号
 				int num = Integer.parseInt(doc.getElementsByTagName("num")
 						.item(i).getFirstChild().getNodeValue());
@@ -280,13 +280,13 @@ public class MainMenuActivity extends Activity
 				data.put("id", id);
 				items.add(data);
 			}
-			
+
 			// 获得SpinnerAdapter
-			SpinnerAdapter as = new 
-			SimpleAdapter(this, items, 
-					android.R.layout.simple_spinner_item,
-					new String[] { "id" }, new int[] { android.R.id.text1 });
-			
+			SpinnerAdapter as = new
+				SimpleAdapter(this, items,
+						android.R.layout.simple_spinner_item,
+						new String[] { "id" }, new int[] { android.R.id.text1 });
+
 			// 绑定数据
 			spinner1.setAdapter(as);
 			spinner2.setAdapter(as);
@@ -309,10 +309,10 @@ public class MainMenuActivity extends Activity
 					// and union table on server
 					// return result
 					/*
-					String queryString = "tableId1="+tableId1+"&tableId2="+tableId2;
-					String url = HttpUtil.BASE_URL+"servlet/UnionTableServlet2?"+queryString;
-					String result = HttpUtil.queryStringForPost(url);
-					*/
+					   String queryString = "tableId1="+tableId1+"&tableId2="+tableId2;
+					   String url = HttpUtil.BASE_URL+"servlet/UnionTableServlet2?"+queryString;
+					   String result = HttpUtil.queryStringForPost(url);
+					   */
 					UnionTable2.Builder union = UnionTable2.newBuilder();
 
 					union.setTableId1(Integer.valueOf(tableId1));
@@ -342,14 +342,14 @@ public class MainMenuActivity extends Activity
 				public void onClick(DialogInterface dialog, int id) {
 					//TODO: V2 --> handle logout and login
 					/*
-					SharedPreferences pres = getSharedPreferences("user_msg", MODE_WORLD_WRITEABLE);
-					SharedPreferences.Editor editor = pres.edit();
-					editor.putString("id", "");
-					editor.putString("name", "");
-					Intent intent = new Intent();
-					intent.setClass(MainMenuActivity.this, LoginActivity.class);
-					startActivity(intent);
-					*/
+					   SharedPreferences pres = getSharedPreferences("user_msg", MODE_WORLD_WRITEABLE);
+					   SharedPreferences.Editor editor = pres.edit();
+					   editor.putString("id", "");
+					   editor.putString("name", "");
+					   Intent intent = new Intent();
+					   intent.setClass(MainMenuActivity.this, LoginActivity.class);
+					   startActivity(intent);
+					   */
 					String result = "logout now!";
 					Toast.makeText(MainMenuActivity.this, result, Toast.LENGTH_LONG).show();
 				}

@@ -1,6 +1,9 @@
 package onionisi.judy.client;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -82,14 +85,16 @@ public class UpdateActivity extends ListActivity {
 	}
 
 	private void updateMenu() {
-		String request = "upd";
+		String request = "upm";
 		try {
 			// TODO: fixed up get data for value
 			String result = JudyZmq.Query(request);
 
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder = factory.newDocumentBuilder();
-			Document doc = builder.parse(result);
+
+			InputStream in = new ByteArrayInputStream(result.getBytes());
+			Document doc = builder.parse(in);
 
 			NodeList nl = doc.getElementsByTagName("menu");
 
@@ -133,7 +138,7 @@ public class UpdateActivity extends ListActivity {
 	}
 
 	private void updateTable() {
-		String request = "upd";
+		String request = "upt";
 		try {
 			// 实例化目标zmq的口令并取得连接的输入流
 			String result = JudyZmq.Query(request);
@@ -141,6 +146,8 @@ public class UpdateActivity extends ListActivity {
 			// 准备读取xml文件所需的所有类实例
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder = dbf.newDocumentBuilder();
+
+			InputStream is = new ByteArrayInputStream(result.getBytes());
 			Document doc = builder.parse(is);
 			// 获取所有table节点装入列表
 			NodeList nodeList = doc.getElementsByTagName("table");
